@@ -36,7 +36,6 @@ namespace KAccounting
 
 		void Start()
 		{
-			print("KAccounting: Start()");
 			if (FlightGlobals.fetch == null)
                 return;
 
@@ -112,9 +111,11 @@ namespace KAccounting
 			}
 		}
 
-		void Inactive()
+		void OnDisable()
 		{
-			print("KAccounting: Inactive()");
+			if (!HighLogic.LoadedSceneIsFlight)
+				return;
+
 			GameEvents.Contract.onCompleted.Remove(OnContractCompleted);
 			GameEvents.Contract.onParameterChange.Remove(OnContractParameterChange);
 
