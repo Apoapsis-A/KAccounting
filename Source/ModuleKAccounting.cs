@@ -80,8 +80,10 @@ namespace KAccounting
 			scienceTransmitted = 0.0f;
 		}
 
+
 		private void OnContractCompleted(Contracts.Contract contract)
 		{
+			numContractsCompleted++;
 			contractFundsEarned += (float)contract.FundsCompletion;
 			contractReputationEarned += contract.ReputationCompletion;
 			contractScienceEarned += contract.ScienceCompletion;
@@ -105,7 +107,7 @@ namespace KAccounting
 
 		private void OnScienceChanged(float amount, TransactionReasons reason)
 		{
-			if (reason == TransactionReasons.ScienceTransmission)
+			if (reason == TransactionReasons.VesselRecovery)
 			{
 				scienceTransmitted += amount;
 			}
@@ -113,9 +115,6 @@ namespace KAccounting
 
 		void OnDisable()
 		{
-			if (!HighLogic.LoadedSceneIsFlight)
-				return;
-
 			GameEvents.Contract.onCompleted.Remove(OnContractCompleted);
 			GameEvents.Contract.onParameterChange.Remove(OnContractParameterChange);
 
